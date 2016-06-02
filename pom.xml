@@ -1,0 +1,86 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>biz.te2.services</groupId>
+	<artifactId>microservice-parent-pom</artifactId>
+	<version>0.2016.06-1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>Microservice Parent POM</name>
+	<description>A parent POM file for all Trident microservices</description>
+	<inceptionYear>2016</inceptionYear>
+	<organization>
+		<name>The Experience Engine</name>
+		<url>http://www.theexperienceengine.com</url>
+	</organization>
+
+    <scm>
+        <connection>scm:git:https://${user.name}@github.com/timbrizard/microservice-parent-pom.git</connection>
+    </scm>
+
+    <ciManagement>
+        <url>https://ci.te2.biz/jenkins/</url>
+    </ciManagement>
+
+	<properties>
+        <jacoco.haltOnFailure>false</jacoco.haltOnFailure>
+	</properties>
+
+	<build>
+	    <finalName>${project.artifactId}-1.0</finalName>
+            <pluginManagement>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>0.7.6.201602180812</version>
+                        <configuration>
+                            <destFile>${basedir}/target/coverage-reports/jacoco-unit.exec</destFile>
+                            <dataFile>${basedir}/target/coverage-reports/jacoco-unit.exec</dataFile>
+                            <haltOnFailure>${jacoco.haltOnFailure}</haltOnFailure>
+                            <rules>
+                              <rule>
+                                <element>CLASS</element>
+                                <excludes>
+                                  <exclude>*Test</exclude>
+                                </excludes>
+                                <limits>
+                                  <limit>
+                                    <counter>LINE</counter>
+                                    <value>COVEREDRATIO</value>
+                                    <minimum>0.50</minimum>
+                                  </limit>
+                                </limits>
+                              </rule>
+                            </rules>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>jacoco-initialize</id>
+                                <phase>process-test-classes</phase>
+                                <goals>
+                                    <goal>prepare-agent</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>jacoco-check</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                            </execution>                 
+                            <execution>
+                                <id>jacoco-site</id>
+                                <phase>site</phase>
+                                <goals>
+                                    <goal>report</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin> 
+                </plugins>
+            </pluginManagement>
+	</build>
+</project>
+
